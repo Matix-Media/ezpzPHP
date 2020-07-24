@@ -27,16 +27,32 @@ class Route
         self::$methodNotAllowed = $function;
     }
 
-    public static function run($basepath = '/')
+    public static function run($basepath = '', $case_matters = false, $trailing_slash_matters = false, $multimatch = false)
     {
 
-        // Parse current url
-        $parsed_url = parse_url($_SERVER['REQUEST_URI']); //Parse Uri
+        // The basepath never needs a trailing slash
+        // Because the trailing slash will be added using the route expressions
+        $basepath = rtrim($basepath, '/');
 
+        // Parse current URL
+        $parsed_url = parse_url($_SERVER['REQUEST_URI']);
+
+        $path = '/';
+
+        // If there is a path available
         if (isset($parsed_url['path'])) {
-            $path = $parsed_url['path'];
-        } else {
-            $path = '/';
+            // If the trailing slash matters
+            if ($trailing_slash_matters) {
+                $path = $parsed_url['path'];
+            } else {
+                // If the path is not equal to the base path (including a trailing slash)
+                if ($basepath . '/' != $parsed_url['path']) {
+                    // Cut the trailing slash away because it does not matters
+                    $path = rtrim($parsed_url['path'], '/');
+                } else {
+                    $path = $parsed_url['path'];
+                }
+            }
         }
 
         // Get current request method
@@ -61,43 +77,44 @@ class Route
             // Add 'find string end' automatically
             $route['expression'] = $route['expression'] . '$';
 
-            // echo $route['expression'].'<br />';
-
             // Check path match
-            if (preg_match('#' . $route['expression'] . '#', $path, $matches)) {
-
+            if (preg_match('#' . $route['expression'] . '#' . ($case_matters ? '' : 'i'), $path, $matches)) {
                 $path_match_found = true;
 
-                // Check method match
-                if (strtolower($method) == strtolower($route['method'])) {
+                // Cast allowed method to array if it's not one already, then run through all methods
+                foreach ((array)$route['method'] as $allowedMethod) {
+                    // Check method match
+                    if (strtolower($method) == strtolower($allowedMethod)) {
+                        array_shift($matches); // Always remove first element. This contains the whole string
 
-                    array_shift($matches); // Always remove first element. This contains the whole string
+                        if ($basepath != '' && $basepath != '/') {
+                            array_shift($matches); // Remove basepath
+                        }
 
-                    if ($basepath != '' && $basepath != '/') {
-                        array_shift($matches); // Remove basepath
+                        call_user_func_array($route['function'], $matches);
+
+                        $route_match_found = true;
+
+                        // Do not check other routes
+                        break;
                     }
-
-                    call_user_func_array($route['function'], $matches);
-
-                    $route_match_found = true;
-
-                    // Do not check other routes
-                    break;
                 }
+            }
+
+            // Break the loop if the first found route is a match
+            if ($route_match_found && !$multimatch) {
+                break;
             }
         }
 
         // No matching route was found
         if (!$route_match_found) {
-
             // But a matching path exists
             if ($path_match_found) {
-                header("HTTP/1.0 405 Method Not Allowed");
                 if (self::$methodNotAllowed) {
                     call_user_func_array(self::$methodNotAllowed, array($path, $method));
                 }
             } else {
-                header("HTTP/1.0 404 Not Found");
                 if (self::$pathNotFound) {
                     call_user_func_array(self::$pathNotFound, array($path));
                 }
