@@ -240,8 +240,9 @@ class Route
                 echo $html_content;
             }
 
+            // Measure execution time 
             $time_elapsed_secs = microtime(true) - $start_time;
-
+            // Log execution time
             Log::console(LogTypes::DEBUG, "Render time: $time_elapsed_secs");
 
             //echo "\n\n$begin_view_control-$end_view_control\n$content_view_control";
