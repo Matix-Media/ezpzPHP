@@ -1,4 +1,4 @@
-# ezpzPHP
+README![ezpzPHP](https://imgur.com/tmoW7Eo.png)
 
 A simple, easy extendable, lightweight PHP-Framework.
 
