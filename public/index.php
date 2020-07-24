@@ -6,10 +6,10 @@ $_ROOT = $_SERVER["DOCUMENT_ROOT"];
 
 
 // Required includes
+include("../vendor/autoload.php");
 include("../requires/Log.php");
 include("../requires/Utils.php");
 include("../requires/Route.php");
-include("../vendor/autoload.php");
 include("../requires/Database.php");
 
 
