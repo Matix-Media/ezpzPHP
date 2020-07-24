@@ -133,7 +133,7 @@ class Route
 
     public static function load_view($view, $body_page = null, $title = null, $arguments = null, $header_control = null, $footer_control = null, $head = null)
     {
-re        $start_time = microtime(true);
+        $start_time = microtime(true);
 
         $view_control_clouseure = "[!VIEW_CONTROL]";
         $view_variables = ["header_control", "footer_control"];
