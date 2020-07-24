@@ -133,6 +133,8 @@ class Route
 
     public static function load_view($view, $body_page = null, $title = null, $arguments = null, $header_control = null, $footer_control = null, $head = null)
     {
+re        $start_time = microtime(true);
+
         $view_control_clouseure = "[!VIEW_CONTROL]";
         $view_variables = ["header_control", "footer_control"];
 
@@ -237,6 +239,10 @@ class Route
                 // If no variables used, print HTML
                 echo $html_content;
             }
+
+            $time_elapsed_secs = microtime(true) - $start_time;
+
+            Log::console(LogTypes::DEBUG, "Render time: $time_elapsed_secs");
 
             //echo "\n\n$begin_view_control-$end_view_control\n$content_view_control";
         } catch (ErrorException $ex) {
