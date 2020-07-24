@@ -8,6 +8,7 @@ A simple, easy extendable, lightweight PHP-Framework.
 -   Component System (Controls)
 -   Page System
 -   MySQL Build Query (Hydrahon)
+-   Simple Routing
 
 ---
 
@@ -30,10 +31,10 @@ After successfully installing ezpzPHP, you should take a glance around the proje
 
 -   The `public` folder holds all the files wich are public available to the web. So you should configure your webserver properly.
 -   In the `content` directory, you can find folders such as `controls`, `pages`, `routes` and `views`.
--   The `controls` folder contains all of your controls (Components). And you should not put your controls anywhere else, otherwise ezpzPHP can not locate the control.
--   The `pages` directory holds all pages. And like the controls, you should not put pages anywhere else.
--   The `views` folder contains all of your views (Page Templates). And the same rules apply as for the controls and pages
--   In the `routes` directory are you route definitions. You can have multiple files to specify your routes, in case you have a lot of them.
+-   The `content/controls` folder contains all of your controls (Components). And you should not put your controls anywhere else, otherwise ezpzPHP can not locate the control.
+-   The `content/pages` directory holds all pages. And like the controls, you should not put pages anywhere else.
+-   The `content/views` folder contains all of your views (Page Templates). And the same rules apply as for the controls and pages
+-   In the `content/routes` directory are you route definitions. You can have multiple files to specify your routes, in case you have a lot of them.
 
 ## Routing
 
