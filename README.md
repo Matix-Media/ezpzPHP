@@ -243,6 +243,7 @@ https://clancats.io/hydrahon/master/ or
 https://github.com/ClanCats/Hydrahon
 
 ---
+Based on [Simple PHP Router by steampixel](https://github.com/steampixel/simplePHPRouter)
 
 Copyright &copy; 2020 Matix Media, Inc.  
 [MIT License](https://github.com/Matix-Media/ezpzPHP/blob/master/LICENSE)
