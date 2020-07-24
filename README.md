@@ -25,6 +25,12 @@ Copy the repository in your destination folder
 
 Typically, you should use a web server such as Apache or Ngnix.
 
+If you want to use the built in PHP web server during development, navigate to the `public` folder and run the following command:
+
+```shell
+php -S localhost:8000
+```
+
 ## Directory Structure
 
 After successfully installing ezpzPHP, you should take a glance around the project to familiarize yourself with the directory structure.
