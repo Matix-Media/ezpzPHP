@@ -226,7 +226,7 @@ If you want some public available resources for you website, then you should use
 
 ## Query Builder
 
-ezpzPHP uses the Hydrahon SQL Query Builder by clancats. In order to connect with your database open up the `public/index.php` file and paste the following with your credentials under the comment with `Database Setup`.
+ezpzPHP uses the [Hydrahon SQL Query Builder by clancats](https://github.com/ClanCats/Hydrahon). In order to connect with your database open up the `public/index.php` file and paste the following with your credentials under the comment with `Database Setup`.
 
 ```php
 DB::setup(new PDO("mysql:host=localhost;dbname=test", "username", "password"));
