@@ -267,4 +267,12 @@ class Route
             Utils::display_error("Unable to load/generate view \"$view\".", $ex);
         }
     }
+
+    public static function redirect($location)
+    {
+        // Set header
+        header("Location: $location");
+        // Die, so no more content gets rendered
+        die();
+    }
 }
