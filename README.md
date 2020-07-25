@@ -8,7 +8,7 @@ A simple, easy extendable, lightweight PHP-Framework.
 -   Component System (Controls)
 -   Page System
 -   MySQL Build Query (Hydrahon)
--   Simple Routing
+-   Routing
 
 ---
 
@@ -243,6 +243,7 @@ https://clancats.io/hydrahon/master/ or
 https://github.com/ClanCats/Hydrahon
 
 ---
+
 Based on [Simple PHP Router by steampixel](https://github.com/steampixel/simplePHPRouter)
 
 Copyright &copy; 2020 Matix Media, Inc.  
