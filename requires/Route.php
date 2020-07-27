@@ -289,9 +289,14 @@ class Route
         $xml = new SimpleXMLElement("<urlset />");
         $xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
+        // Get HTTP Protocol
+        $protocol = "http://";
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+            $protocol = "https://";
+        }
+
         // Generating base path
-        $base = $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) .
-            '://' . $_SERVER["HTTP_HOST"];
+        $base = $protocol . $_SERVER["HTTP_HOST"];
 
         // Iterating over sites
         foreach (self::$routes as $route) {
