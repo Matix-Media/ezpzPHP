@@ -286,9 +286,8 @@ class Route
     public static function generate_sitemap($cast_methods = ["GET"], $last_mod = "Y-m-d", $change_frequency = "weekly")
     {
         // Generate XML
-        $xml = new SimpleXMLElement("<xml/>");
-        $urlset = $xml->addChild("urlset");
-        $urlset->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+        $xml = new SimpleXMLElement("<urlset />");
+        $xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
         // Generating base path
         $base = $_SERVER["HTTP_HOST"];
