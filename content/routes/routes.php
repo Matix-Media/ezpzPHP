@@ -17,3 +17,8 @@ Route::add("/second", function () {
 Route::add("/number/([0-9]*)/bar", function ($var1) {
     Route::load_view("default.html", "number.php", null, ["number" => $var1]);
 });
+
+Route::add("/sitemap", function ($change_frequency = null) {
+    Route::header("Content-Type", "text/xml");
+    echo Route::generate_sitemap();
+});

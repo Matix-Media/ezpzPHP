@@ -5,6 +5,7 @@ class Route
 {
 
     private static $routes = array();
+    private static $basepath = '';
     private static $pathNotFound = null;
     private static $methodNotAllowed = null;
 
@@ -15,6 +16,11 @@ class Route
             'function' => $function,
             'method' => $method
         ));
+    }
+
+    public static function header($header, $value, $http_response_code = null)
+    {
+        header($header . ": " . $value, true, $http_response_code);
     }
 
     public static function pathNotFound($function)
@@ -33,6 +39,7 @@ class Route
         // The basepath never needs a trailing slash
         // Because the trailing slash will be added using the route expressions
         $basepath = rtrim($basepath, '/');
+        self::$basepath = $basepath;
 
         // Parse current URL
         $parsed_url = parse_url($_SERVER['REQUEST_URI']);
@@ -274,5 +281,31 @@ class Route
         header("Location: $location");
         // Die, so no more content gets rendered
         die();
+    }
+
+    public static function generate_sitemap($cast_methods = ["GET"], $last_mod = "Y-m-d", $change_frequency = "weekly")
+    {
+        // Generate XML
+        $xml = new SimpleXMLElement("<xml/>");
+        $urlset = $xml->addChild("urlset");
+        $urlset->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+        // Generating base path
+        $base = $_SERVER["HTTP_HOST"];
+
+        // Iterating over sites
+        foreach (self::$routes as $route) {
+            if (preg_grep("/" . strtolower($route["method"]) . "/i", $cast_methods)) {
+                $url = $xml->addChild("url");
+                $url->addChild("loc", $base . "/" . trim($route["expression"], "/"));
+                if ($last_mod !== null)
+                    $url->addChild("lastmod", date($last_mod));
+                if ($change_frequency !== null)
+                    $url->addChild("changefreq", $change_frequency);
+            }
+        }
+
+        // Returning XML
+        return $xml->asXML();
     }
 }
