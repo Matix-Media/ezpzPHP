@@ -290,7 +290,8 @@ class Route
         $xml->addAttribute("xmlns", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
         // Generating base path
-        $base = $_SERVER["HTTP_HOST"];
+        $base = $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, strpos($_SERVER["SERVER_PROTOCOL"], '/'))) .
+            '://' . $_SERVER["HTTP_HOST"];
 
         // Iterating over sites
         foreach (self::$routes as $route) {
