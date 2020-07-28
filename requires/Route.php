@@ -275,8 +275,10 @@ class Route
         }
     }
 
-    public static function redirect($location)
+    public static function redirect($location, $status_code = 302)
     {
+        // Set response code
+        http_response_code($status_code);
         // Set header
         header("Location: $location");
         // Die, so no more content gets rendered
